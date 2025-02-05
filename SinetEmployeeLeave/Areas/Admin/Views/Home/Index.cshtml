@@ -1,5 +1,7 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- Header / Navigation Bar -->
@@ -77,6 +79,91 @@
             </div>
         </div>
     </div>
+
+    <!-- Pie Chart for Leave Status -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Leave Request Status</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="statusChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Leave Requests Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Leave Requests</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Employee</th>
+                                <th>Leave Type</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var request in Model.LeaveRequests)
+                            {
+                                <tr>
+                                    <td>@request.Id</td>
+                                    <td>@request.Employee.FullName</td>
+                                    <td>@request.LeaveType</td>
+                                    <td>@request.StartDate.ToShortDateString()</td>
+                                    <td>@request.EndDate.ToShortDateString()</td>
+                                    <td>@request.Status</td>
+                                    <td>
+                                        @if (request.Status == "Pending")
+                                        {
+                                            <form method="post" action="@Url.Action("Approve", "Admin", new { id = request.Id })" class="d-inline">
+                                                <button class="btn btn-success btn-sm" type="submit">Approve</button>
+                                            </form>
+                                            <form method="post" action="@Url.Action("Reject", "Admin", new { id = request.Id })" class="d-inline">
+                                                <button class="btn btn-danger btn-sm" type="submit">Reject</button>
+                                            </form>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination Controls (optional) -->
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Recent Notifications -->
     <div class="row">

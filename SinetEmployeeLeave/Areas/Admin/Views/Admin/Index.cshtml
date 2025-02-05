@@ -1,6 +1,12 @@
 ﻿@model IEnumerable<LeaveRequest>
 @using SinetEmployeeLeave.Models
 
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
 <div class="container mt-4">
     <h2 class="mb-4">Admin Dashboard</h2>
     <div id="notification-list" class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">

@@ -5,7 +5,7 @@ using SinetEmployeeLeave.Models;
 using SinetEmployeeLeave.Repository;
 using SinetEmployeeLeave.Service;
 
-namespace SinetEmployeeLeave.Controllers
+namespace SinetEmployeeLeave.Areas.Admin.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using SinetEmployeeLeave.Models;
+using SinetEmployeeLeave.Repository;
 
-namespace SinetEmployeeLeave.Controllers
+namespace SinetEmployeeLeave.Areas.Admin.Controllers
 {
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using SinetEmployeeLeave.Models;
-    using SinetEmployeeLeave.Repository;
-    using System.Linq;
-    using System.Threading.Tasks;
 
+
+    [Area("Admin")]
     public class LeaveRequestViewController : Controller
     {
         private readonly LeaveRequestRepository _leaveRequestRepository;

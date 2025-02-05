@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 namespace SinetEmployeeLeave.Areas.Admin.Controllers
 {
 
-
+    [Area("Admin")]
     [Authorize(Roles = "Manager,HR Admin")]
     public class AdminController : Controller
     {

@@ -59,8 +59,7 @@ app.MapRazorPages(); // For Identity UI
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+    pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}");
 
 //SignalR routes
 app.UseEndpoints(endpoints =>

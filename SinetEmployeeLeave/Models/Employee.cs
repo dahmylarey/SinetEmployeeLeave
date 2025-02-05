@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace SinetEmployeeLeave.Models
 {
@@ -7,6 +9,7 @@ namespace SinetEmployeeLeave.Models
 
     public class Employee : IdentityUser
     {
+        [Key]
         public int Id { get; set; }
         public string FullName { get; set; }
         public string Department { get; set; }

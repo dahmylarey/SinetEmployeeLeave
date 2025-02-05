@@ -1,8 +1,121 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Header / Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Leave Management</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Notifications</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Leave Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-4">
+    <!-- Leave Requests Summary -->
+    <div class="row">
+        <div class="col-lg-4 col-md-6">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Total Leave Requests</div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.TotalLeaveRequests</h5>
+                    <p class="card-text">Total leave requests made by employees.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Approved Leave</div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.ApprovedLeave</h5>
+                    <p class="card-text">Number of leave requests approved.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Rejected Leave</div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.RejectedLeave</h5>
+                    <p class="card-text">Number of leave requests rejected.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leave Statistics Chart -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Leave Statistics (Bar Chart)</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="leaveChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Notifications -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Recent Notifications</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group" id="notification-list">
+                        <!-- Notifications will be added dynamically here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var ctx = document.getElementById('leaveChart').getContext('2d');
+        var leaveChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Approved', 'Rejected', 'Pending'],
+                datasets: [{
+                    label: 'Leave Requests',
+                    data: [@Model.ApprovedLeave, @Model.RejectedLeave, @Model.PendingLeave],
+                    backgroundColor: ['#28a745', '#dc3545', '#ffc107'],
+                }]
+            }
+        });
+    });
+</script>
+
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2025 Leave Management System. All Rights Reserved.</p>
+</footer>

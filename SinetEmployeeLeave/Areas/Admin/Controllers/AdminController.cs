@@ -9,6 +9,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using SinetEmployeeLeave.Service;
+using Microsoft.AspNetCore.SignalR;
+using SinetEmployeeLeave.Hubs;
+using Microsoft.EntityFrameworkCore;
 
 namespace SinetEmployeeLeave.Areas.Admin.Controllers
 {
@@ -19,12 +22,16 @@ namespace SinetEmployeeLeave.Areas.Admin.Controllers
     {
         private readonly LeaveRequestRepository _leaveRequestRepository;
         private readonly UserManager<Employee> _userManager;
+        private readonly IHubContext<NotificationsHub> _hubContext;
 
-        public AdminController(LeaveRequestRepository leaveRequestRepository, UserManager<Employee> userManager)
+        public AdminController(LeaveRequestRepository leaveRequestRepository, UserManager<Employee> userManager, IHubContext<NotificationsHub> hubContext)
         {
             _leaveRequestRepository = leaveRequestRepository;
             _userManager = userManager;
+            _hubContext = hubContext;
         }
+
+
 
         //Pending leave
         public async Task<IActionResult> Index()
@@ -44,6 +51,11 @@ namespace SinetEmployeeLeave.Areas.Admin.Controllers
                 leaveRequest.Status = LeaveStatus.Approved;
                 await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
+                // Send real-time notification to employee
+                await _hubContext.Clients.User(leaveRequest.EmployeeId.ToString())
+                                  .SendAsync("ReceiveNotification", "Your leave request has been approved.");
+
+                // Send real-time Email to employee
                 var emailService = new EmailService();
                 await emailService.SendApprovalNotificationAsync(leaveRequest.Employee.Email, "approved", leaveRequest);
             }
@@ -60,6 +72,11 @@ namespace SinetEmployeeLeave.Areas.Admin.Controllers
                 leaveRequest.Status = LeaveStatus.Rejected;
                 await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
+                // Send real-time notification to employee
+                await _hubContext.Clients.User(leaveRequest.EmployeeId.ToString())
+                                  .SendAsync("ReceiveNotification", "Your leave request has been rejected.");
+
+                // Send real-time Email to employee
                 var emailService = new EmailService();
                 await emailService.SendApprovalNotificationAsync(leaveRequest.Employee.Email, "rejected", leaveRequest);
             }

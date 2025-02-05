@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/SinetEmployeeLeave.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" asp-append-version="true">
     <script src="https://cdn.jsdelivr.net/npm/chart.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" asp-append-version="true"></script>
 
 
 </head>
@@ -41,6 +42,19 @@
         </main>
     </div>
 
+    @* //Add Toast Notification HTML Structure *@
+    <div id="toast-container" class="position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Leave Management</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                New Notification!
+            </div>
+        </div>
+    </div>
+
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2025 - SinetEmployeeLeave - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -49,6 +63,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signalr/5.0.0/signalr.min.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

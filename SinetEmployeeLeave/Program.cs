@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SinetEmployeeLeave.Data;
+using SinetEmployeeLeave.Hubs;
 using SinetEmployeeLeave.Implementation;
 using SinetEmployeeLeave.Models;
 using SinetEmployeeLeave.Repository;
@@ -25,6 +26,9 @@ builder.Services.AddRazorPages();
 //Register Repositories 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<LeaveRequestRepository>();
+
+//Add SignalR services
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -56,6 +60,13 @@ app.MapRazorPages(); // For Identity UI
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+//SignalR routes
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<NotificationsHub>("/notificationsHub");
+});
 app.MapRazorPages();
 
 app.Run();

@@ -6,11 +6,13 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+
+
 <div class="form-group">
 
-    <form id="account" method="post">
-        <h2>log into your account.</h2>
-        <hr /><hr />
+    <form id="account" method="post" class="form-floating">
+        <h2>Input your log in details below.</h2>
+        <hr /><br /><br />
 
         <div class="form-group">
             <label asp-for="Input.Email"></label>
@@ -22,11 +24,11 @@
             <label asp-for="Input.Password"></label>
             <input asp-for="Input.Password" class="form-control" />
             <span asp-validation-for="Input.Password" class="text-danger"></span>
-        </div><br /><br /><br />
+        </div><br /><br />
 
         <div>
             <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-        </div><br />
+        </div><br /><br />
 
         <div>
             <p>
@@ -38,12 +40,12 @@
             <p>
                 <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Email confirmation</a>
             </p>
-        </div>
+        </div<br /><br />
 
 
 
 
-    </form>
+    </form><br /><br /><br />
    
     
     @* <div class="col-md-6 col-md-offset-2"> *@
